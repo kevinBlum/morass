@@ -46,4 +46,7 @@ Before publishing:
 npm run check
 ```
 
-Then publish through the GitHub Actions `Publish` workflow from a GitHub release whose tag matches `v<package.json version>`.
+`npm run check` includes `npm pack --dry-run` after the library build, so CI
+verifies the publishable package contents before a release. Then publish through
+the GitHub Actions `Publish` workflow from a GitHub release whose tag matches
+`v<package.json version>`.

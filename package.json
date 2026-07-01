@@ -29,11 +29,12 @@
   },
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build && npm run pack:check",
     "dev": "vite --host 0.0.0.0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
+    "pack:check": "npm_config_cache=${TMPDIR:-/tmp}/morass-npm-cache npm pack --dry-run",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
