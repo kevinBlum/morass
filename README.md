@@ -28,3 +28,22 @@ import "@kevinblum/morass/styles.css";
 ```
 
 Morass ships unopinionated class names and CSS variables. Applications can override tokens at `:root` or inside a scoped theme container.
+
+## Release Boundary
+
+Morass is consumed by Webbery as a versioned package. Treat these surfaces as public within a published version:
+
+- exports from `@kevinblum/morass`
+- `@kevinblum/morass/styles.css`
+- CSS custom properties intended for application theming
+- component semantics and required peer dependency ranges
+
+Breaking changes require a coordinated Webbery update and a major version or explicit release note. Webbery should pin Morass to a published version instead of depending on a live sibling checkout once `@kevinblum/morass` is available in GitHub Packages.
+
+Before publishing:
+
+```bash
+npm run check
+```
+
+Then publish through the GitHub Actions `Publish` workflow from a GitHub release whose tag matches `v<package.json version>`.

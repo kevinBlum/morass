@@ -13,7 +13,7 @@ export default defineConfig({
       entry: resolve(currentDir, "src/index.ts"),
       name: "Morass",
       fileName: "morass",
-      formats: ["es", "cjs"]
+      formats: ["es", "cjs"],
     },
     rollupOptions: {
       external: ["react", "react-dom", "react/jsx-runtime"],
@@ -21,9 +21,9 @@ export default defineConfig({
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
-          "react/jsx-runtime": "jsxRuntime"
-        }
-      }
-    }
-  }
+          "react/jsx-runtime": "jsxRuntime",
+        },
+      },
+    },
+  },
 });
