@@ -4,7 +4,7 @@ import type {
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
-  SelectHTMLAttributes
+  SelectHTMLAttributes,
 } from "react";
 import { cx, toneClass, type Tone } from "./utils";
 
@@ -24,7 +24,11 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button className={cx("m-button", `m-button--${variant}`, className)} type={type} {...props}>
+    <button
+      className={cx("m-button", `m-button--${variant}`, className)}
+      type={type}
+      {...props}
+    >
       {icon ? <span className="m-button__icon">{icon}</span> : null}
       {children ? <span className="m-button__label">{children}</span> : null}
     </button>
@@ -37,7 +41,14 @@ export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   title?: ReactNode;
 }
 
-export function Card({ actions, children, className, eyebrow, title, ...props }: CardProps) {
+export function Card({
+  actions,
+  children,
+  className,
+  eyebrow,
+  title,
+  ...props
+}: CardProps) {
   return (
     <section className={cx("m-card", className)} {...props}>
       {eyebrow || title || actions ? (
@@ -64,9 +75,13 @@ export interface AppFrameProps {
 export function AppFrame({ children, header, nav, sidebar }: AppFrameProps) {
   return (
     <div className="m-app-frame">
-      {sidebar ? <aside className="m-app-frame__sidebar">{sidebar}</aside> : null}
+      {sidebar ? (
+        <aside className="m-app-frame__sidebar">{sidebar}</aside>
+      ) : null}
       <div className="m-app-frame__main">
-        {header ? <header className="m-app-frame__header">{header}</header> : null}
+        {header ? (
+          <header className="m-app-frame__header">{header}</header>
+        ) : null}
         <main className="m-app-frame__content">{children}</main>
         {nav ? <nav className="m-app-frame__nav">{nav}</nav> : null}
       </div>
@@ -81,9 +96,16 @@ export interface FieldProps {
   labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
 }
 
-export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement>, FieldProps {}
+export interface TextFieldProps
+  extends InputHTMLAttributes<HTMLInputElement>, FieldProps {}
 
-export function TextField({ error, helpText, label, labelProps, ...props }: TextFieldProps) {
+export function TextField({
+  error,
+  helpText,
+  label,
+  labelProps,
+  ...props
+}: TextFieldProps) {
   return (
     <label className="m-field" {...labelProps}>
       <span className="m-field__label">{label}</span>
@@ -94,9 +116,17 @@ export function TextField({ error, helpText, label, labelProps, ...props }: Text
   );
 }
 
-export interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement>, FieldProps {}
+export interface SelectFieldProps
+  extends SelectHTMLAttributes<HTMLSelectElement>, FieldProps {}
 
-export function SelectField({ children, error, helpText, label, labelProps, ...props }: SelectFieldProps) {
+export function SelectField({
+  children,
+  error,
+  helpText,
+  label,
+  labelProps,
+  ...props
+}: SelectFieldProps) {
   return (
     <label className="m-field" {...labelProps}>
       <span className="m-field__label">{label}</span>
@@ -139,13 +169,21 @@ export interface TabsProps<TValue extends string> {
   value: TValue;
 }
 
-export function Tabs<TValue extends string>({ "aria-label": ariaLabel, onValueChange, tabs, value }: TabsProps<TValue>) {
+export function Tabs<TValue extends string>({
+  "aria-label": ariaLabel,
+  onValueChange,
+  tabs,
+  value,
+}: TabsProps<TValue>) {
   return (
     <div aria-label={ariaLabel} className="m-tabs" role="tablist">
       {tabs.map((tab) => (
         <button
           aria-selected={tab.value === value}
-          className={cx("m-tabs__tab", tab.value === value && "m-tabs__tab--active")}
+          className={cx(
+            "m-tabs__tab",
+            tab.value === value && "m-tabs__tab--active",
+          )}
           key={tab.value}
           onClick={() => onValueChange(tab.value)}
           role="tab"
@@ -169,7 +207,10 @@ export function ProgressSteps({ current, steps }: ProgressStepsProps) {
       {steps.map((step, index) => (
         <li
           aria-current={index === current ? "step" : undefined}
-          className={cx("m-progress__step", index <= current && "m-progress__step--active")}
+          className={cx(
+            "m-progress__step",
+            index <= current && "m-progress__step--active",
+          )}
           key={step}
         >
           <span>{index + 1}</span>
@@ -204,7 +245,9 @@ export function Modal({ actions, children, onClose, open, title }: ModalProps) {
           </Button>
         </header>
         <div className="m-modal__body">{children}</div>
-        {actions ? <footer className="m-modal__actions">{actions}</footer> : null}
+        {actions ? (
+          <footer className="m-modal__actions">{actions}</footer>
+        ) : null}
       </section>
     </div>
   );

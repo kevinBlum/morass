@@ -4,7 +4,7 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["dist", "coverage", "node_modules"]
+    ignores: ["dist", "coverage", "node_modules"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -15,12 +15,12 @@ export default tseslint.config(
       globals: globals.browser,
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname
-      }
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     rules: {
       "@typescript-eslint/consistent-type-imports": "error",
-      "@typescript-eslint/no-explicit-any": "error"
-    }
-  }
+      "@typescript-eslint/no-explicit-any": "error",
+    },
+  },
 );
