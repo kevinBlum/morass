@@ -1,10 +1,10 @@
 {
-  "name": "@kevinblum/morass",
-  "version": "0.1.0",
+  "name": "@effigy-analytics/morass",
+  "version": "0.1.1",
   "description": "Composable React UI primitives for durable product interfaces.",
   "type": "module",
   "license": "UNLICENSED",
-  "author": "Webbery",
+  "author": "Effigy Analytics",
   "sideEffects": [
     "**/*.css"
   ],
