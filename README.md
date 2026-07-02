@@ -23,8 +23,8 @@ npm run build
 ## Public API
 
 ```tsx
-import { AppFrame, Button, Card, StatusPill } from "@kevinblum/morass";
-import "@kevinblum/morass/styles.css";
+import { AppFrame, Button, Card, StatusPill } from "@effigy-analytics/morass";
+import "@effigy-analytics/morass/styles.css";
 ```
 
 Morass ships unopinionated class names and CSS variables. Applications can override tokens at `:root` or inside a scoped theme container.
@@ -33,12 +33,12 @@ Morass ships unopinionated class names and CSS variables. Applications can overr
 
 Morass is consumed by Webbery as a versioned package. Treat these surfaces as public within a published version:
 
-- exports from `@kevinblum/morass`
-- `@kevinblum/morass/styles.css`
+- exports from `@effigy-analytics/morass`
+- `@effigy-analytics/morass/styles.css`
 - CSS custom properties intended for application theming
 - component semantics and required peer dependency ranges
 
-Breaking changes require a coordinated Webbery update and a major version or explicit release note. Webbery should pin Morass to a published version instead of depending on a live sibling checkout once `@kevinblum/morass` is available in GitHub Packages.
+Breaking changes require a coordinated Webbery update and a major version or explicit release note. Webbery should pin Morass to a published version instead of depending on a live sibling checkout once `@effigy-analytics/morass` is available in GitHub Packages.
 
 Before publishing:
 

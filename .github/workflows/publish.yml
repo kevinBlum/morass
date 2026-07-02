@@ -19,7 +19,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           registry-url: https://npm.pkg.github.com
-          scope: "@kevinblum"
+          scope: "@effigy-analytics"
 
       - run: npm ci
       - run: npm run check
