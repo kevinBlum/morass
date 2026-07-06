@@ -1,0 +1,18 @@
+name: Shared Lint
+
+# Org-standard security/lint gate: actionlint + zizmor + Trivy + gitleaks
+# (+ terraform fmt/validate/tflint when terraform_working_directory is set).
+# See effigy-analytics-umbrella docs/STANDARDS.md — CI/CD contract.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  shared-lint:
+    name: Shared Lint
+    uses: effigy-analytics/.github/.github/workflows/reusable-lint.yml@10764556d121a36819787d2e577d2ca0282a2d16 # v4.15
+    with:
+      terraform_working_directory: ""
