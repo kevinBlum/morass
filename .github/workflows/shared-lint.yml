@@ -1,8 +1,12 @@
 name: Shared Lint
 
-# Org-standard security/lint gate: actionlint + zizmor + Trivy + gitleaks
-# (+ terraform fmt/validate/tflint when terraform_working_directory is set).
-# See effigy-analytics-umbrella docs/STANDARDS.md — CI/CD contract.
+# VENDORED copy of the org's reusable-lint.yml (effigy-analytics/.github,
+# v4.17). morass is public and GitHub forbids public repos from calling
+# reusable workflows in private repos — the caller form startup-failed with
+# zero jobs on every run (see umbrella ADR 002 amendment, 2026-07-07).
+# Keep manually in sync with the shared workflow when it changes.
+# Local configuration vs the shared defaults: no terraform jobs (JS-only
+# repo), gitleaks enabled, npm audit gates the package root.
 
 on:
   pull_request:
@@ -11,8 +15,92 @@ permissions:
   contents: read
 
 jobs:
-  shared-lint:
-    name: Shared Lint
-    uses: effigy-analytics/.github/.github/workflows/reusable-lint.yml@10764556d121a36819787d2e577d2ca0282a2d16 # v4.15
-    with:
-      terraform_working_directory: ""
+  actionlint:
+    name: Lint GitHub Actions Workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          persist-credentials: false
+
+      - name: Run actionlint
+        env:
+          # Fail on shellcheck warnings and errors; style/info notes in
+          # embedded scripts should not fail the org gate.
+          SHELLCHECK_OPTS: --severity=warning
+        run: |
+          bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint -color
+
+  zizmor:
+    name: GitHub Actions Security Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          persist-credentials: false
+
+      - name: Install and run zizmor
+        run: |
+          pip install zizmor
+          zizmor --min-severity medium --min-confidence high .github/workflows/
+
+  trivy:
+    name: Terraform Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          persist-credentials: false
+
+      - name: Install Trivy
+        run: |
+          sudo apt-get install -y wget apt-transport-https gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      - name: Run Trivy (IaC scan)
+        run: trivy config --severity "HIGH,CRITICAL" --exit-code 1 .
+
+  gitleaks:
+    name: Secret Scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # Install the gitleaks binary directly rather than the Action. The
+      # Action needs pull-requests:read (for PR context) and makes Octokit
+      # calls that fail under the default caller token ("Resource not
+      # accessible by integration"), even with comments disabled. The
+      # binary does the same scan without touching the GitHub API.
+      - name: Install gitleaks
+        env:
+          GITLEAKS_VERSION: "8.30.1"
+        run: |
+          curl -sSLf "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | sudo tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Run gitleaks
+        run: gitleaks detect --source . --verbose --redact --exit-code 1 --no-banner
+
+  npm-audit:
+    name: npm Audit (high+)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          persist-credentials: false
+
+      - name: Run npm audit (fail on high or critical)
+        run: npm audit --audit-level=high
