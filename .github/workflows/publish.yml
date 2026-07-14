@@ -92,4 +92,7 @@ jobs:
         if: steps.exists.outputs.exists == 'false'
         run: |
           npm pkg delete publishConfig
+          # project .npmrc outranks setup-node's registry-url; assert the
+          # scope resolves to npmjs or publish silently targets GH Packages
+          test "$(npm config get @effigy-analytics:registry)" = "https://registry.npmjs.org"
           npm publish --access public
