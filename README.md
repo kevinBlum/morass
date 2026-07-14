@@ -14,14 +14,16 @@ Morass is the standard UI package for the Effigy Analytics suite. It was born in
 
 ## Installation
 
-The package is published to GitHub Packages under the `@effigy-analytics` scope. GitHub Packages requires authentication to install, even for public packages — consumers need an `.npmrc` pointing the scope at the registry and a token with `read:packages`:
-
-```
-@effigy-analytics:registry=https://npm.pkg.github.com
-```
+The package is published to the public npm registry — no authentication or registry configuration needed:
 
 ```bash
 npm install @effigy-analytics/morass
+```
+
+It is also mirrored to GitHub Packages. Unlike npmjs, GitHub Packages requires authentication even for public packages; only use it if your project already points the `@effigy-analytics` scope there, and provide a token with `read:packages`:
+
+```
+@effigy-analytics:registry=https://npm.pkg.github.com
 ```
 
 ## Development
