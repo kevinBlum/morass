@@ -59,6 +59,7 @@ export function ButtonLink({
 export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   actions?: ReactNode;
   eyebrow?: ReactNode;
+  footer?: ReactNode;
   title?: ReactNode;
 }
 
@@ -67,6 +68,7 @@ export function Card({
   children,
   className,
   eyebrow,
+  footer,
   title,
   ...props
 }: CardProps) {
@@ -82,6 +84,7 @@ export function Card({
         </header>
       ) : null}
       {children ? <div className="m-card__body">{children}</div> : null}
+      {footer ? <footer className="m-card__footer">{footer}</footer> : null}
     </section>
   );
 }

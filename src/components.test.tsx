@@ -70,6 +70,19 @@ describe("component primitives", () => {
     expect(html).toContain('class="m-status-pill m-status-pill--warning"');
   });
 
+  it("renders a Card footer slot only when provided", () => {
+    const withFooter = renderToStaticMarkup(
+      <Card footer={<a href="/more">Read more</a>} title="Teaser">
+        Body
+      </Card>,
+    );
+    const withoutFooter = renderToStaticMarkup(<Card title="Plain">Body</Card>);
+
+    expect(withFooter).toContain('class="m-card__footer"');
+    expect(withFooter).toContain("Read more");
+    expect(withoutFooter).not.toContain("m-card__footer");
+  });
+
   it("lays AppFrame out single-column unless a sidebar is provided", () => {
     const withSidebar = renderToStaticMarkup(
       <AppFrame sidebar={<span>Nav</span>}>Content</AppFrame>,
