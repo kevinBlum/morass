@@ -267,6 +267,30 @@
     text-transform: uppercase;
   }
 
+  .m-hero {
+    padding: 48px 0 40px;
+  }
+
+  .m-hero__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.1;
+    margin: 8px 0 0;
+  }
+
+  .m-hero__lede {
+    color: var(--m-color-text-muted);
+    font-size: 1.15rem;
+    margin: 12px 0 0;
+    max-width: 56ch;
+  }
+
+  .m-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
   .m-field {
     display: grid;
     gap: 6px;

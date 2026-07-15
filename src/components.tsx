@@ -115,6 +115,33 @@ export function AppFrame({ children, header, nav, sidebar }: AppFrameProps) {
   );
 }
 
+export interface HeroProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
+  actions?: ReactNode;
+  eyebrow?: ReactNode;
+  lede?: ReactNode;
+  title: ReactNode;
+}
+
+export function Hero({
+  actions,
+  children,
+  className,
+  eyebrow,
+  lede,
+  title,
+  ...props
+}: HeroProps) {
+  return (
+    <section className={cx("m-hero", className)} {...props}>
+      {eyebrow ? <p className="m-eyebrow">{eyebrow}</p> : null}
+      <h1 className="m-hero__title">{title}</h1>
+      {lede ? <p className="m-hero__lede">{lede}</p> : null}
+      {actions ? <div className="m-hero__actions">{actions}</div> : null}
+      {children}
+    </section>
+  );
+}
+
 export interface FieldProps {
   error?: ReactNode;
   helpText?: ReactNode;

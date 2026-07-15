@@ -6,6 +6,7 @@ import {
   Button,
   ButtonLink,
   Card,
+  Hero,
   Metric,
   Modal,
   ProgressSteps,
@@ -119,6 +120,30 @@ describe("component primitives", () => {
     expect(html).toContain('class="m-field__help"');
     expect(html).toContain('class="m-field__error"');
     expect(html).toContain('class="m-input m-input--select"');
+  });
+
+  it("renders Hero with eyebrow, title, lede, and actions", () => {
+    const html = renderToStaticMarkup(
+      <Hero
+        actions={<ButtonLink href="/start">Get started</ButtonLink>}
+        eyebrow="A two-person studio"
+        id="top"
+        lede="Things made by people, for people."
+        title={
+          <>
+            Software for <em>humans</em>.
+          </>
+        }
+      />,
+    );
+
+    expect(html).toContain('class="m-hero"');
+    expect(html).toContain('id="top"');
+    expect(html).toContain('class="m-eyebrow"');
+    expect(html).toContain('<h1 class="m-hero__title">');
+    expect(html).toContain("<em>humans</em>");
+    expect(html).toContain('class="m-hero__lede"');
+    expect(html).toContain('class="m-hero__actions"');
   });
 
   it("renders tabs with accessible tablist state and emits selected values", () => {
