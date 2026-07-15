@@ -41,9 +41,39 @@ import { AppFrame, Button, Card, StatusPill } from "@effigy-analytics/morass";
 import "@effigy-analytics/morass/styles.css";
 ```
 
-Primitives: `AppFrame`, `Button`, `Card`, `TextField`, `SelectField`, `StatusPill`, `Metric`, `Tabs`, `ProgressSteps`, `Modal`, plus shared tone/utility helpers.
+Primitives: `AppFrame`, `Button`, `ButtonLink`, `Card`, `TextField`, `SelectField`, `StatusPill`, `Metric`, `Tabs`, `ProgressSteps`, `Modal`, `Hero`, `PageSection`, plus shared tone/utility helpers.
 
-Morass ships unopinionated class names and CSS variables. Applications can override tokens at `:root` or inside a scoped theme container.
+### Theming
+
+All colors flow through `--m-*` custom properties. The stylesheet is wrapped in `@layer morass`, so unlayered application CSS — including token overrides — always wins, regardless of stylesheet import order.
+
+A theme is a token set. Morass ships two:
+
+- **Default (light):** declared at `:root`.
+- **Dark:** applied when an ancestor has `data-m-theme="dark"`, or automatically when the OS prefers dark and no `data-m-theme` attribute is set.
+
+```html
+<html data-m-theme="dark">
+  <!-- force dark -->
+  <html data-m-theme="light">
+    <!-- force light (disables OS auto-switching) -->
+    <html>
+      <!-- follow the OS preference -->
+    </html>
+  </html>
+</html>
+```
+
+Tokens cascade, so `data-m-theme` works on any subtree, not just the document root. Custom themes are plain CSS — override any `--m-*` token in unlayered styles, or define a named theme:
+
+```css
+[data-m-theme="parchment"] {
+  --m-color-bg: #f4ead8;
+  --m-color-text: #3a3226;
+}
+```
+
+The full token list lives at the top of `styles.css`.
 
 ### Subpath: reminders
 
