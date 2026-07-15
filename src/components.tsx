@@ -142,6 +142,24 @@ export function Hero({
   );
 }
 
+export interface PageSectionProps extends HTMLAttributes<HTMLElement> {
+  label?: ReactNode;
+}
+
+export function PageSection({
+  children,
+  className,
+  label,
+  ...props
+}: PageSectionProps) {
+  return (
+    <section className={cx("m-page-section", className)} {...props}>
+      {label ? <p className="m-eyebrow">{label}</p> : null}
+      {children}
+    </section>
+  );
+}
+
 export interface FieldProps {
   error?: ReactNode;
   helpText?: ReactNode;

@@ -291,6 +291,14 @@
     margin-top: 20px;
   }
 
+  .m-page-section {
+    padding: 28px 0;
+  }
+
+  .m-page-section > .m-eyebrow {
+    margin-bottom: 12px;
+  }
+
   .m-field {
     display: grid;
     gap: 6px;

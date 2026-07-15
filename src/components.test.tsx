@@ -9,6 +9,7 @@ import {
   Hero,
   Metric,
   Modal,
+  PageSection,
   ProgressSteps,
   SelectField,
   StatusPill,
@@ -185,6 +186,21 @@ describe("component primitives", () => {
       personalButton.props.onClick();
     }
     expect(onValueChange).toHaveBeenCalledWith("personal");
+  });
+
+  it("renders PageSection with optional label and attribute passthrough", () => {
+    const withLabel = renderToStaticMarkup(
+      <PageSection id="work" label="What we make">
+        <p>Cards</p>
+      </PageSection>,
+    );
+    const bare = renderToStaticMarkup(<PageSection>Just content</PageSection>);
+
+    expect(withLabel).toContain('class="m-page-section"');
+    expect(withLabel).toContain('id="work"');
+    expect(withLabel).toContain('class="m-eyebrow"');
+    expect(withLabel).toContain("What we make");
+    expect(bare).not.toContain("m-eyebrow");
   });
 
   it("renders progress and modal accessibility semantics", () => {
