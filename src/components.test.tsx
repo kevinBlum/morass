@@ -50,6 +50,19 @@ describe("component primitives", () => {
     expect(html).toContain('class="m-status-pill m-status-pill--warning"');
   });
 
+  it("lays AppFrame out single-column unless a sidebar is provided", () => {
+    const withSidebar = renderToStaticMarkup(
+      <AppFrame sidebar={<span>Nav</span>}>Content</AppFrame>,
+    );
+    const withoutSidebar = renderToStaticMarkup(<AppFrame>Content</AppFrame>);
+
+    expect(withSidebar).toContain('class="m-app-frame m-app-frame--sidebar"');
+    expect(withSidebar).toContain('class="m-app-frame__sidebar"');
+    expect(withoutSidebar).toContain('class="m-app-frame"');
+    expect(withoutSidebar).not.toContain("m-app-frame--sidebar");
+    expect(withoutSidebar).not.toContain("m-app-frame__sidebar");
+  });
+
   it("renders form fields with labels, help text, errors, and native attributes", () => {
     const html = renderToStaticMarkup(
       <>

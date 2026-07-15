@@ -113,8 +113,12 @@
 
   .m-app-frame {
     display: grid;
-    grid-template-columns: 248px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     min-height: 100vh;
+  }
+
+  .m-app-frame--sidebar {
+    grid-template-columns: 248px minmax(0, 1fr);
   }
 
   .m-app-frame__sidebar {
@@ -469,7 +473,7 @@
   }
 
   @media (max-width: 820px) {
-    .m-app-frame {
+    .m-app-frame--sidebar {
       grid-template-columns: 1fr;
     }
 

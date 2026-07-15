@@ -74,7 +74,9 @@ export interface AppFrameProps {
 
 export function AppFrame({ children, header, nav, sidebar }: AppFrameProps) {
   return (
-    <div className="m-app-frame">
+    <div
+      className={cx("m-app-frame", Boolean(sidebar) && "m-app-frame--sidebar")}
+    >
       {sidebar ? (
         <aside className="m-app-frame__sidebar">{sidebar}</aside>
       ) : null}
