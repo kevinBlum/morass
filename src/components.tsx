@@ -1,4 +1,5 @@
 import type {
+  AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   HTMLAttributes,
   InputHTMLAttributes,
@@ -35,9 +36,30 @@ export function Button({
   );
 }
 
+export interface ButtonLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  icon?: ReactNode;
+  variant?: ButtonVariant;
+}
+
+export function ButtonLink({
+  children,
+  className,
+  icon,
+  variant = "secondary",
+  ...props
+}: ButtonLinkProps) {
+  return (
+    <a className={cx("m-button", `m-button--${variant}`, className)} {...props}>
+      {icon ? <span className="m-button__icon">{icon}</span> : null}
+      {children ? <span className="m-button__label">{children}</span> : null}
+    </a>
+  );
+}
+
 export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   actions?: ReactNode;
   eyebrow?: ReactNode;
+  footer?: ReactNode;
   title?: ReactNode;
 }
 
@@ -46,6 +68,7 @@ export function Card({
   children,
   className,
   eyebrow,
+  footer,
   title,
   ...props
 }: CardProps) {
@@ -61,6 +84,7 @@ export function Card({
         </header>
       ) : null}
       {children ? <div className="m-card__body">{children}</div> : null}
+      {footer ? <footer className="m-card__footer">{footer}</footer> : null}
     </section>
   );
 }
@@ -74,7 +98,9 @@ export interface AppFrameProps {
 
 export function AppFrame({ children, header, nav, sidebar }: AppFrameProps) {
   return (
-    <div className="m-app-frame">
+    <div
+      className={cx("m-app-frame", Boolean(sidebar) && "m-app-frame--sidebar")}
+    >
       {sidebar ? (
         <aside className="m-app-frame__sidebar">{sidebar}</aside>
       ) : null}
@@ -86,6 +112,51 @@ export function AppFrame({ children, header, nav, sidebar }: AppFrameProps) {
         {nav ? <nav className="m-app-frame__nav">{nav}</nav> : null}
       </div>
     </div>
+  );
+}
+
+export interface HeroProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
+  actions?: ReactNode;
+  eyebrow?: ReactNode;
+  lede?: ReactNode;
+  title: ReactNode;
+}
+
+export function Hero({
+  actions,
+  children,
+  className,
+  eyebrow,
+  lede,
+  title,
+  ...props
+}: HeroProps) {
+  return (
+    <section className={cx("m-hero", className)} {...props}>
+      {eyebrow ? <p className="m-eyebrow">{eyebrow}</p> : null}
+      <h1 className="m-hero__title">{title}</h1>
+      {lede ? <p className="m-hero__lede">{lede}</p> : null}
+      {actions ? <div className="m-hero__actions">{actions}</div> : null}
+      {children}
+    </section>
+  );
+}
+
+export interface PageSectionProps extends HTMLAttributes<HTMLElement> {
+  label?: ReactNode;
+}
+
+export function PageSection({
+  children,
+  className,
+  label,
+  ...props
+}: PageSectionProps) {
+  return (
+    <section className={cx("m-page-section", className)} {...props}>
+      {label ? <p className="m-eyebrow">{label}</p> : null}
+      {children}
+    </section>
   );
 }
 
