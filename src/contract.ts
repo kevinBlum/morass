@@ -162,12 +162,23 @@ function parseColor(token: MorassTokenName, value: string): Rgba {
     /^rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)(?:\s*[/,]\s*([\d.]+))?\s*\)$/,
   );
   if (rgb) {
-    return [
+    const channels: Rgba = [
       Number(rgb[1]),
       Number(rgb[2]),
       Number(rgb[3]),
       rgb[4] === undefined ? 1 : Number(rgb[4]),
     ];
+    const [r, g, b, alpha] = channels;
+    const valid =
+      [r, g, b].every(
+        (channel) => Number.isFinite(channel) && channel <= 255,
+      ) &&
+      Number.isFinite(alpha) &&
+      alpha <= 1;
+    if (!valid) {
+      throw new Error(`validateTheme: out-of-range ${token} value "${value}"`);
+    }
+    return channels;
   }
   throw new Error(`validateTheme: cannot parse ${token} value "${value}"`);
 }
@@ -233,7 +244,7 @@ export function validateTheme(theme: MorassTheme): ValidationResult {
     const ratio = contrastRatio(fg, base);
     if (ratio < REQUIRED) {
       failures.push({
-        bg: pair.bg,
+        bg: [...pair.bg],
         context: pair.context,
         fg: pair.fg,
         ratio: Math.round(ratio * 100) / 100,
