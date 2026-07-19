@@ -84,6 +84,16 @@ describe("validateTheme", () => {
       expect(pair.bg.length).toBeGreaterThan(0);
     }
   });
+
+  it("rejects a malformed rgb() value without catastrophic backtracking", () => {
+    const start = performance.now();
+    expect(() =>
+      validateTheme(
+        themeWith({ "--m-color-primary": `rgb(9 9 9${" ".repeat(10000)}` }),
+      ),
+    ).toThrow("--m-color-primary");
+    expect(performance.now() - start).toBeLessThan(1000);
+  });
 });
 
 describe("built-in themes satisfy the contract", () => {

@@ -159,7 +159,7 @@ function parseColor(token: MorassTokenName, value: string): Rgba {
     return parseColor(token, `#${r}${r}${g}${g}${b}${b}`);
   }
   const rgb = text.match(
-    /^rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)\s*(?:[/,]\s*([\d.]+))?\s*\)$/,
+    /^rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)(?:\s*[/,]\s*([\d.]+))?\s*\)$/,
   );
   if (rgb) {
     return [
