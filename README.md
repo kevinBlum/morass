@@ -69,6 +69,50 @@ Tokens cascade, so `data-m-theme` works on any subtree, not just the document ro
 
 The full token list lives at the top of `styles.css`.
 
+## Theme contract
+
+morass's design contracts are machine-enforced, not documented. `@layer`
+guarantees your overrides win; the contrast contract guarantees your
+theme stays readable. Every fg/bg pair the components render as text is
+listed in `REQUIRED_PAIRS`, and `validateTheme` checks any theme against
+it at WCAG AA (4.5:1), compositing translucent backgrounds the way the
+browser does.
+
+Validate a remapped theme in your own CI:
+
+```ts
+import { themes, validateTheme } from "@effigy-analytics/morass";
+
+const result = validateTheme({
+  ...themes.light,
+  "--m-color-primary": "#5bb89c",
+  "--m-color-on-primary": "#ffffff",
+});
+// result.ok === false
+// result.failures[0] →
+// { fg: "--m-color-on-primary", bg: ["--m-color-primary"],
+//   ratio: 2.41, required: 4.5, context: "primary Button label" }
+```
+
+To validate the theme a page actually renders (after your own CSS), pull
+the live values and pass them in:
+
+```js
+const styles = getComputedStyle(document.documentElement);
+const theme = Object.fromEntries(
+  Object.keys(themes.light).map((token) => [
+    token,
+    styles.getPropertyValue(token).trim(),
+  ]),
+);
+validateTheme(theme);
+```
+
+`validateTheme` throws if a contract token is missing or unparseable —
+a typo'd token must not pass as vacuously valid. Borders and focus rings
+are not in contract v1 (they're a divider aesthetic, not text); see the
+0.4.0 design doc for the rationale.
+
 ### Subpath: reminders
 
 Due-date presentation helpers (`DueState`, `getDueStateTone`, `formatRelativeDue`) live behind a subpath export so the root API stays purely generic:
