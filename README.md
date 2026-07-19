@@ -69,7 +69,7 @@ Tokens cascade, so `data-m-theme` works on any subtree, not just the document ro
 
 The full token list lives at the top of `styles.css`.
 
-## Theme contract
+### Theme contract
 
 morass's design contracts are machine-enforced, not documented. `@layer`
 guarantees your overrides win; the contrast contract guarantees your
