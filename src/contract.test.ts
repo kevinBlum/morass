@@ -85,3 +85,11 @@ describe("validateTheme", () => {
     }
   });
 });
+
+describe("built-in themes satisfy the contract", () => {
+  it.each(["light", "dark"] as const)("%s theme validates clean", (name) => {
+    const result = validateTheme(themes[name]);
+    expect(result.failures).toEqual([]);
+    expect(result.ok).toBe(true);
+  });
+});
