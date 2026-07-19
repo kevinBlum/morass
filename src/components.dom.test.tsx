@@ -60,4 +60,25 @@ describe("Modal keyboard behavior", () => {
     expect(document.activeElement).toBe(outside);
     outside.remove();
   });
+
+  it("keeps focus and uses the latest onClose when the handler identity changes", () => {
+    const first = vi.fn();
+    const second = vi.fn();
+    const view = render(
+      <Modal onClose={first} open title="t">
+        <button type="button">inner</button>
+      </Modal>,
+    );
+    const inner = view.getByRole("button", { name: "inner" });
+    inner.focus();
+    view.rerender(
+      <Modal onClose={second} open title="t">
+        <button type="button">inner</button>
+      </Modal>,
+    );
+    expect(document.activeElement).toBe(inner);
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(second).toHaveBeenCalledTimes(1);
+    expect(first).not.toHaveBeenCalled();
+  });
 });

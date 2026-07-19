@@ -306,6 +306,8 @@ export interface ModalProps {
 
 export function Modal({ actions, children, onClose, open, title }: ModalProps) {
   const panelRef = useRef<HTMLElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     if (!open) {
@@ -318,7 +320,7 @@ export function Modal({ actions, children, onClose, open, title }: ModalProps) {
     panelRef.current?.focus();
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose();
+        onCloseRef.current();
         return;
       }
       if (event.key !== "Tab") {
@@ -352,7 +354,7 @@ export function Modal({ actions, children, onClose, open, title }: ModalProps) {
       document.removeEventListener("keydown", handleKeyDown);
       previous?.focus();
     };
-  }, [onClose, open]);
+  }, [open]);
 
   if (!open) {
     return null;
