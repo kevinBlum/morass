@@ -8,7 +8,7 @@ All notable Morass changes should be recorded here before publishing a package v
 - `PairFailure.bg` is a fresh array per failure — it no longer aliases the `REQUIRED_PAIRS` entry, so callers can't mutate the exported contract.
 - `Modal` focus trap recaptures Tab/Shift+Tab when focus has escaped the panel, instead of letting it walk the background page.
 - `Tabs` keeps the first tab keyboard-reachable (`tabIndex 0`) when `value` matches no tab; previously every tab was `-1` and the tablist was unreachable.
-- Internal: `Modal`'s `onClose` ref is updated in an effect (concurrent-render safe); `themes` lists `light` before `dark` to match the base/overlay relationship.
+- Internal: `Modal`'s `onClose` ref is updated in an insertion effect (concurrent-render safe with no stale-handler window before paint); `themes` lists `light` before `dark` to match the base/overlay relationship.
 
 ## 0.4.0
 

@@ -141,7 +141,27 @@ export const REQUIRED_PAIRS: readonly RequiredPair[] = [
 
 type Rgba = [number, number, number, number];
 
+/**
+ * Range-checks every parsed color at the single point all formats return
+ * through, so a future format branch cannot reintroduce a silent
+ * nonsense-ratio or NaN pass-through.
+ */
 function parseColor(token: MorassTokenName, value: string): Rgba {
+  const [r, g, b, alpha] = parseChannels(token, value);
+  const inRange =
+    [r, g, b].every(
+      (channel) => Number.isFinite(channel) && channel >= 0 && channel <= 255,
+    ) &&
+    Number.isFinite(alpha) &&
+    alpha >= 0 &&
+    alpha <= 1;
+  if (!inRange) {
+    throw new Error(`validateTheme: out-of-range ${token} value "${value}"`);
+  }
+  return [r, g, b, alpha];
+}
+
+function parseChannels(token: MorassTokenName, value: string): Rgba {
   const text = value.trim();
   const hex = text.match(/^#([0-9a-f]{6})([0-9a-f]{2})?$/i);
   if (hex) {
@@ -156,29 +176,18 @@ function parseColor(token: MorassTokenName, value: string): Rgba {
   const short = text.match(/^#([0-9a-f]{3})$/i);
   if (short) {
     const [r, g, b] = short[1].split("");
-    return parseColor(token, `#${r}${r}${g}${g}${b}${b}`);
+    return parseChannels(token, `#${r}${r}${g}${g}${b}${b}`);
   }
   const rgb = text.match(
     /^rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)(?:\s*[/,]\s*([\d.]+))?\s*\)$/,
   );
   if (rgb) {
-    const channels: Rgba = [
+    return [
       Number(rgb[1]),
       Number(rgb[2]),
       Number(rgb[3]),
       rgb[4] === undefined ? 1 : Number(rgb[4]),
     ];
-    const [r, g, b, alpha] = channels;
-    const valid =
-      [r, g, b].every(
-        (channel) => Number.isFinite(channel) && channel <= 255,
-      ) &&
-      Number.isFinite(alpha) &&
-      alpha <= 1;
-    if (!valid) {
-      throw new Error(`validateTheme: out-of-range ${token} value "${value}"`);
-    }
-    return channels;
   }
   throw new Error(`validateTheme: cannot parse ${token} value "${value}"`);
 }

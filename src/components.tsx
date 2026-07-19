@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useInsertionEffect, useRef } from "react";
 import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
@@ -341,7 +341,11 @@ export interface ModalProps {
 export function Modal({ actions, children, onClose, open, title }: ModalProps) {
   const panelRef = useRef<HTMLElement>(null);
   const onCloseRef = useRef(onClose);
-  useEffect(() => {
+  // Insertion effect, not passive: it flushes synchronously during commit,
+  // so a keydown can never land between paint and the ref refresh and call
+  // a stale onClose. (A passive effect flushes after paint; a render-phase
+  // write breaks under concurrent rendering.)
+  useInsertionEffect(() => {
     onCloseRef.current = onClose;
   });
 
