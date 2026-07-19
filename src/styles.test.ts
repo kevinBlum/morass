@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { themes } from "./themes";
 
 const css = readFileSync(
   fileURLToPath(new URL("./styles.css", import.meta.url)),
@@ -68,5 +69,30 @@ describe("styles.css invariants", () => {
     expect(dark).not.toBeNull();
     expect(auto).not.toBeNull();
     expect(declarationsOf(auto ?? "")).toEqual(declarationsOf(dark ?? ""));
+  });
+});
+
+export function recordOf(block: string): Record<string, string> {
+  const record: Record<string, string> = {};
+  for (const declaration of block.split(";")) {
+    const text = declaration.replace(/\s+/g, " ").trim();
+    if (!text) {
+      continue;
+    }
+    const colon = text.indexOf(":");
+    record[text.slice(0, colon).trim()] = text.slice(colon + 1).trim();
+  }
+  return record;
+}
+
+describe("themes.ts stays in sync with styles.css", () => {
+  it("matches the :root token block exactly", () => {
+    expect(recordOf(blockOf(css, ":root") ?? "")).toEqual(themes.light);
+  });
+
+  it("matches the dark token block exactly", () => {
+    expect(recordOf(blockOf(css, '[data-m-theme="dark"]') ?? "")).toEqual(
+      themes.dark,
+    );
   });
 });
