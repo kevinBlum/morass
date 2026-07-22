@@ -5,9 +5,12 @@ import {
   Button,
   ButtonLink,
   Card,
+  EmptyState,
   Hero,
   Metric,
   Modal,
+  NotFound,
+  PageHeader,
   PageSection,
   ProgressSteps,
   SelectField,
@@ -146,6 +149,53 @@ describe("component primitives", () => {
     expect(html).toContain('class="m-hero__actions"');
   });
 
+  it("renders a PageHeader with title, subtitle, breadcrumbs, and actions", () => {
+    const html = renderToStaticMarkup(
+      <PageHeader
+        actions={<button>New</button>}
+        breadcrumbs={<nav>Home / Reports</nav>}
+        subtitle="Last 30 days"
+        title="Reports"
+      />,
+    );
+    expect(html).toContain('class="m-page-header"');
+    expect(html).toContain('class="m-page-header__breadcrumbs"');
+    expect(html).toContain('<h1 class="m-page-header__title">Reports</h1>');
+    expect(html).toContain('class="m-page-header__subtitle"');
+    expect(html).toContain('class="m-page-header__actions"');
+  });
+
+  it("omits PageHeader optional slots when not provided", () => {
+    const html = renderToStaticMarkup(<PageHeader title="Bare" />);
+    expect(html).toContain('class="m-page-header"');
+    expect(html).not.toContain("m-page-header__breadcrumbs");
+    expect(html).not.toContain("m-page-header__subtitle");
+    expect(html).not.toContain("m-page-header__actions");
+  });
+
+  it("renders an EmptyState on a paper surface with icon, title, description, action", () => {
+    const html = renderToStaticMarkup(
+      <EmptyState
+        action={<button>Add one</button>}
+        description="Nothing here yet."
+        icon={<span data-icon="box" />}
+        title="No reports"
+      />,
+    );
+    expect(html).toContain('class="m-empty-state m-paper"');
+    expect(html).toContain('class="m-empty-state__icon"');
+    expect(html).toContain('<h3 class="m-empty-state__title">No reports</h3>');
+    expect(html).toContain('class="m-empty-state__description"');
+    expect(html).toContain('class="m-empty-state__action"');
+  });
+
+  it("omits EmptyState optional slots when not provided", () => {
+    const html = renderToStaticMarkup(<EmptyState title="Empty" />);
+    expect(html).not.toContain("m-empty-state__icon");
+    expect(html).not.toContain("m-empty-state__description");
+    expect(html).not.toContain("m-empty-state__action");
+  });
+
   it("renders tabs with accessible tablist state", () => {
     const element = (
       <Tabs
@@ -210,5 +260,28 @@ describe("component primitives", () => {
     expect(openHtml).toContain('aria-modal="true"');
     expect(openHtml).toContain("Quick add");
     expect(closedHtml).toBe("");
+  });
+
+  it("renders NotFound with defaults and a fallback home link", () => {
+    const html = renderToStaticMarkup(<NotFound />);
+    expect(html).toContain('class="m-not-found"');
+    expect(html).toContain('role="status"');
+    expect(html).toContain('class="m-not-found__heading">Page Not Found</h1>');
+    expect(html).toContain("exist or has been moved"); // apostrophe is escaped in static markup — match a clean substring
+    expect(html).toContain('class="m-not-found__home" href="/"');
+  });
+
+  it("renders NotFound with custom heading, message, and action", () => {
+    const html = renderToStaticMarkup(
+      <NotFound
+        action={<a href="/back">Go back</a>}
+        heading="Gone"
+        message="Missing."
+      />,
+    );
+    expect(html).toContain(">Gone</h1>");
+    expect(html).toContain("Missing.");
+    expect(html).toContain("Go back");
+    expect(html).not.toContain('class="m-not-found__home"');
   });
 });

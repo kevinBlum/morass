@@ -147,6 +147,96 @@ export function Hero({
   );
 }
 
+export interface PageHeaderProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "title"
+> {
+  actions?: ReactNode;
+  breadcrumbs?: ReactNode;
+  subtitle?: ReactNode;
+  title: ReactNode;
+}
+
+export function PageHeader({
+  actions,
+  breadcrumbs,
+  className,
+  subtitle,
+  title,
+  ...props
+}: PageHeaderProps) {
+  return (
+    <header className={cx("m-page-header", className)} {...props}>
+      <div className="m-page-header__main">
+        {breadcrumbs ? (
+          <div className="m-page-header__breadcrumbs">{breadcrumbs}</div>
+        ) : null}
+        <h1 className="m-page-header__title">{title}</h1>
+        {subtitle ? (
+          <p className="m-page-header__subtitle">{subtitle}</p>
+        ) : null}
+      </div>
+      {actions ? <div className="m-page-header__actions">{actions}</div> : null}
+    </header>
+  );
+}
+
+export interface EmptyStateProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "title"
+> {
+  action?: ReactNode;
+  description?: ReactNode;
+  icon?: ReactNode;
+  title: ReactNode;
+}
+
+export function EmptyState({
+  action,
+  className,
+  description,
+  icon,
+  title,
+  ...props
+}: EmptyStateProps) {
+  return (
+    <div className={cx("m-empty-state", "m-paper", className)} {...props}>
+      {icon ? <div className="m-empty-state__icon">{icon}</div> : null}
+      <h3 className="m-empty-state__title">{title}</h3>
+      {description ? (
+        <p className="m-empty-state__description">{description}</p>
+      ) : null}
+      {action ? <div className="m-empty-state__action">{action}</div> : null}
+    </div>
+  );
+}
+
+export interface NotFoundProps {
+  action?: ReactNode;
+  heading?: string;
+  message?: string;
+}
+
+export function NotFound({
+  action,
+  heading = "Page Not Found",
+  message = "The page you're looking for doesn't exist or has been moved.",
+}: NotFoundProps) {
+  return (
+    <div className="m-not-found" role="status">
+      <h1 className="m-not-found__heading">{heading}</h1>
+      <p className="m-not-found__message">{message}</p>
+      <div className="m-not-found__action">
+        {action ?? (
+          <a className="m-not-found__home" href="/">
+            Return home
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export interface PageSectionProps extends HTMLAttributes<HTMLElement> {
   label?: ReactNode;
 }
