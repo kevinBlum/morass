@@ -123,3 +123,11 @@ describe("surface treatments", () => {
     expect(body.includes("repeating-linear-gradient")).toBe(false);
   });
 });
+
+describe("control treatments", () => {
+  it("defines the control treatments (felt + stitch) using only tokens", () => {
+    for (const sel of [".m-felt {", ".m-felt--sage {", ".m-stitch {"]) {
+      expect(css.includes(sel)).toBe(true);
+    }
+  });
+});

@@ -624,4 +624,37 @@
       transform: none;
     }
   }
+
+  .m-felt {
+    background: var(--m-felt-sage);
+    color: var(--m-felt-sage-on);
+    border: none;
+    border-radius: 12px;
+  }
+
+  .m-felt--sage {
+    background: var(--m-felt-sage);
+    color: var(--m-felt-sage-on);
+  }
+  .m-felt--butter {
+    background: var(--m-felt-butter);
+    color: var(--m-felt-butter-on);
+  }
+  .m-felt--rose {
+    background: var(--m-felt-rose);
+    color: var(--m-felt-rose-on);
+  }
+  .m-felt--sky {
+    background: var(--m-felt-sky);
+    color: var(--m-felt-sky-on);
+  }
+  .m-felt--lavender {
+    background: var(--m-felt-lavender);
+    color: var(--m-felt-lavender-on);
+  }
+
+  .m-stitch {
+    outline: 2px dashed var(--m-stitch);
+    outline-offset: -5px;
+  }
 }
