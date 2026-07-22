@@ -700,4 +700,33 @@
     outline: 2px dashed var(--m-stitch);
     outline-offset: -5px;
   }
+
+  .m-empty-state {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .m-empty-state__icon {
+    color: var(--m-color-text-muted);
+    font-size: 1.75rem;
+  }
+
+  .m-empty-state__title {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .m-empty-state__description {
+    color: var(--m-color-text-muted);
+    margin: 0;
+    max-width: 44ch;
+  }
+
+  .m-empty-state__action {
+    margin-top: 6px;
+  }
 }

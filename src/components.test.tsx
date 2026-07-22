@@ -5,6 +5,7 @@ import {
   Button,
   ButtonLink,
   Card,
+  EmptyState,
   Hero,
   Metric,
   Modal,
@@ -169,6 +170,29 @@ describe("component primitives", () => {
     expect(html).not.toContain("m-page-header__breadcrumbs");
     expect(html).not.toContain("m-page-header__subtitle");
     expect(html).not.toContain("m-page-header__actions");
+  });
+
+  it("renders an EmptyState on a paper surface with icon, title, description, action", () => {
+    const html = renderToStaticMarkup(
+      <EmptyState
+        action={<button>Add one</button>}
+        description="Nothing here yet."
+        icon={<span data-icon="box" />}
+        title="No reports"
+      />,
+    );
+    expect(html).toContain('class="m-empty-state m-paper"');
+    expect(html).toContain('class="m-empty-state__icon"');
+    expect(html).toContain('<h3 class="m-empty-state__title">No reports</h3>');
+    expect(html).toContain('class="m-empty-state__description"');
+    expect(html).toContain('class="m-empty-state__action"');
+  });
+
+  it("omits EmptyState optional slots when not provided", () => {
+    const html = renderToStaticMarkup(<EmptyState title="Empty" />);
+    expect(html).not.toContain("m-empty-state__icon");
+    expect(html).not.toContain("m-empty-state__description");
+    expect(html).not.toContain("m-empty-state__action");
   });
 
   it("renders tabs with accessible tablist state", () => {

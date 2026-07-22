@@ -181,6 +181,36 @@ export function PageHeader({
   );
 }
 
+export interface EmptyStateProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "title"
+> {
+  action?: ReactNode;
+  description?: ReactNode;
+  icon?: ReactNode;
+  title: ReactNode;
+}
+
+export function EmptyState({
+  action,
+  className,
+  description,
+  icon,
+  title,
+  ...props
+}: EmptyStateProps) {
+  return (
+    <div className={cx("m-empty-state", "m-paper", className)} {...props}>
+      {icon ? <div className="m-empty-state__icon">{icon}</div> : null}
+      <h3 className="m-empty-state__title">{title}</h3>
+      {description ? (
+        <p className="m-empty-state__description">{description}</p>
+      ) : null}
+      {action ? <div className="m-empty-state__action">{action}</div> : null}
+    </div>
+  );
+}
+
 export interface PageSectionProps extends HTMLAttributes<HTMLElement> {
   label?: ReactNode;
 }
