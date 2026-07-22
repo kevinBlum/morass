@@ -25,11 +25,13 @@
 Recolor the page and surface tokens to warm paper so morass reads as paper, keeping all existing contrast pairs green. No new tokens; value changes only.
 
 **Files:**
+
 - Modify: `src/styles.css` (`:root` block lines 3-4; note: dark block stays as-is this task)
 - Modify: `src/themes.ts` (`themes.light` `--m-color-bg`, `--m-color-surface`)
 - Test: `src/styles.test.ts` (existing), `src/contract.test.ts` (existing)
 
 **Interfaces:**
+
 - Consumes: nothing new.
 - Produces: `--m-color-bg` = `#f7f2e7`, `--m-color-surface` = `#fffdf7` (light theme).
 
@@ -47,8 +49,8 @@ it("keeps the warm-paper light theme AA-clean", () => {
 - [ ] **Step 3: Recolor the tokens** — in `src/styles.css` `:root`:
 
 ```css
-    --m-color-bg: #f7f2e7;
-    --m-color-surface: #fffdf7;
+--m-color-bg: #f7f2e7;
+--m-color-surface: #fffdf7;
 ```
 
 and in `src/themes.ts` `light`:
@@ -74,12 +76,14 @@ git commit -m "feat(morass): warm-paper canvas + surface tokens"
 Add the five pastel felt fills, each with a paired `on-` ink, to all three token blocks + `themes.ts`, and add a contrast pair per fill so `validateTheme` guarantees AA.
 
 **Files:**
+
 - Modify: `src/styles.css` (`:root`, `[data-m-theme="dark"]`, `:root:not([data-m-theme])`)
 - Modify: `src/themes.ts` (`light`, `dark`)
 - Modify: `src/contract.ts` (`REQUIRED_PAIRS`)
 - Test: `src/contract.test.ts`
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces tokens (light / dark): `--m-felt-sage`,`--m-felt-sage-on`; `--m-felt-butter`,`--m-felt-butter-on`; `--m-felt-rose`,`--m-felt-rose-on`; `--m-felt-sky`,`--m-felt-sky-on`; `--m-felt-lavender`,`--m-felt-lavender-on`.
 
@@ -88,9 +92,7 @@ Add the five pastel felt fills, each with a paired `on-` ink, to all three token
 ```ts
 it("guarantees AA on every felt fill in light and dark", () => {
   for (const theme of [themes.light, themes.dark]) {
-    const felts = REQUIRED_PAIRS.filter((p) =>
-      p.context.startsWith("felt "),
-    );
+    const felts = REQUIRED_PAIRS.filter((p) => p.context.startsWith("felt "));
     expect(felts.length).toBe(5);
     const result = validateTheme(theme);
     const feltFailures = result.failures.filter((f) =>
@@ -106,31 +108,31 @@ it("guarantees AA on every felt fill in light and dark", () => {
 - [ ] **Step 3: Add the tokens** — in `src/styles.css` `:root` add:
 
 ```css
-    --m-felt-sage: #c9ddcb;
-    --m-felt-sage-on: #2f5741;
-    --m-felt-butter: #f6e6a6;
-    --m-felt-butter-on: #5f4e12;
-    --m-felt-rose: #efc9c6;
-    --m-felt-rose-on: #7a2f2a;
-    --m-felt-sky: #c4dbe6;
-    --m-felt-sky-on: #234b5c;
-    --m-felt-lavender: #d8cde9;
-    --m-felt-lavender-on: #453363;
+--m-felt-sage: #c9ddcb;
+--m-felt-sage-on: #2f5741;
+--m-felt-butter: #f6e6a6;
+--m-felt-butter-on: #5f4e12;
+--m-felt-rose: #efc9c6;
+--m-felt-rose-on: #7a2f2a;
+--m-felt-sky: #c4dbe6;
+--m-felt-sky-on: #234b5c;
+--m-felt-lavender: #d8cde9;
+--m-felt-lavender-on: #453363;
 ```
 
 Add these **identical** lines to BOTH `[data-m-theme="dark"]` and `:root:not([data-m-theme])` (dark "craft desk at night" — deeper fills, luminous ink):
 
 ```css
-    --m-felt-sage: #2c4b3c;
-    --m-felt-sage-on: #9fe4c0;
-    --m-felt-butter: #4a4222;
-    --m-felt-butter-on: #f4dd8f;
-    --m-felt-rose: #4d2e2b;
-    --m-felt-rose-on: #f3b6b0;
-    --m-felt-sky: #26404d;
-    --m-felt-sky-on: #a9d6e8;
-    --m-felt-lavender: #372c4a;
-    --m-felt-lavender-on: #cdb9ec;
+--m-felt-sage: #2c4b3c;
+--m-felt-sage-on: #9fe4c0;
+--m-felt-butter: #4a4222;
+--m-felt-butter-on: #f4dd8f;
+--m-felt-rose: #4d2e2b;
+--m-felt-rose-on: #f3b6b0;
+--m-felt-sky: #26404d;
+--m-felt-sky-on: #a9d6e8;
+--m-felt-lavender: #372c4a;
+--m-felt-lavender-on: #cdb9ec;
 ```
 
 In `src/themes.ts` add the light values to `light` and the dark values to `dark` (identical strings).
@@ -161,11 +163,13 @@ git commit -m "feat(morass): pastel felt palette with paired on-tokens + AA cont
 Add non-color-pair structural tokens the treatments need: graph grid lines, margin rule, tape, stitch thread, paper lift shadow, post-it fill/ink/shadow. These are decorative (not in `REQUIRED_PAIRS`) but must live in the token blocks so treatments stay raw-color-free.
 
 **Files:**
+
 - Modify: `src/styles.css` (all three token blocks)
 - Modify: `src/themes.ts` (`light`, `dark`)
 - Test: `src/styles.test.ts` (existing sync/mirror tests cover it)
 
 **Interfaces:**
+
 - Produces tokens: `--m-grid-line`, `--m-grid-margin`, `--m-tape`, `--m-stitch`, `--m-paper-shadow`, `--m-postit-bg`, `--m-postit-on`, `--m-postit-shadow`.
 
 - [ ] **Step 1: Write the failing test** — add to `src/styles.test.ts` inside `describe("styles.css invariants", …)`:
@@ -193,27 +197,27 @@ it("declares the material-structure tokens in :root", () => {
 - [ ] **Step 3: Add the tokens** — `:root`:
 
 ```css
-    --m-grid-line: #e9ebdf;
-    --m-grid-margin: #f0b6ad;
-    --m-tape: rgb(196 219 230 / 0.62);
-    --m-stitch: #5c8168;
-    --m-paper-shadow: 3px 6px 16px rgb(120 105 70 / 0.16);
-    --m-postit-bg: #f6e6a6;
-    --m-postit-on: #5f4e12;
-    --m-postit-shadow: 2px 5px 12px rgb(120 100 40 / 0.25);
+--m-grid-line: #e9ebdf;
+--m-grid-margin: #f0b6ad;
+--m-tape: rgb(196 219 230 / 0.62);
+--m-stitch: #5c8168;
+--m-paper-shadow: 3px 6px 16px rgb(120 105 70 / 0.16);
+--m-postit-bg: #f6e6a6;
+--m-postit-on: #5f4e12;
+--m-postit-shadow: 2px 5px 12px rgb(120 100 40 / 0.25);
 ```
 
 Add these **identical** lines to BOTH `[data-m-theme="dark"]` and `:root:not([data-m-theme])`:
 
 ```css
-    --m-grid-line: #232a27;
-    --m-grid-margin: #5c3f3b;
-    --m-tape: rgb(120 150 165 / 0.30);
-    --m-stitch: #9fe4c0;
-    --m-paper-shadow: 3px 6px 18px rgb(0 0 0 / 0.45);
-    --m-postit-bg: #4a4222;
-    --m-postit-on: #f4dd8f;
-    --m-postit-shadow: 2px 5px 14px rgb(0 0 0 / 0.5);
+--m-grid-line: #232a27;
+--m-grid-margin: #5c3f3b;
+--m-tape: rgb(120 150 165 / 0.3);
+--m-stitch: #9fe4c0;
+--m-paper-shadow: 3px 6px 18px rgb(0 0 0 / 0.45);
+--m-postit-bg: #4a4222;
+--m-postit-on: #f4dd8f;
+--m-postit-shadow: 2px 5px 14px rgb(0 0 0 / 0.5);
 ```
 
 Mirror both into `themes.ts` `light` / `dark`.
@@ -234,10 +238,12 @@ git commit -m "feat(morass): material-structure tokens (grid, tape, stitch, pape
 Add the content-side treatment utilities, built only from tokens. `canvas-grid` is opt-in (a class a consumer adds), never applied to `body`.
 
 **Files:**
+
 - Modify: `src/styles.css` (append rules inside `@layer morass`, after the token blocks)
 - Test: `src/styles.test.ts`
 
 **Interfaces:**
+
 - Produces CSS classes: `.m-canvas-grid`, `.m-paper`, `.m-paper--taped`, `.m-postit`.
 
 - [ ] **Step 1: Write the failing test** — add to `src/styles.test.ts`:
@@ -258,45 +264,49 @@ it("defines the surface treatments using only tokens", () => {
 - [ ] **Step 3: Add the treatments** — append inside `@layer morass` in `src/styles.css` (before the closing `}` of the layer):
 
 ```css
-  .m-canvas-grid {
-    background:
-      linear-gradient(var(--m-grid-margin) 0 0) 46px 0 / 1.5px 100% no-repeat,
-      repeating-linear-gradient(var(--m-grid-line) 0 1px, transparent 1px 24px),
-      repeating-linear-gradient(90deg, var(--m-grid-line) 0 1px, transparent 1px 24px),
-      var(--m-color-bg);
-  }
+.m-canvas-grid {
+  background:
+    linear-gradient(var(--m-grid-margin) 0 0) 46px 0 / 1.5px 100% no-repeat,
+    repeating-linear-gradient(var(--m-grid-line) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(
+      90deg,
+      var(--m-grid-line) 0 1px,
+      transparent 1px 24px
+    ),
+    var(--m-color-bg);
+}
 
-  .m-paper {
-    background: var(--m-color-surface);
-    border-radius: var(--m-radius);
-    box-shadow: var(--m-paper-shadow);
-    position: relative;
-  }
+.m-paper {
+  background: var(--m-color-surface);
+  border-radius: var(--m-radius);
+  box-shadow: var(--m-paper-shadow);
+  position: relative;
+}
 
-  .m-paper--taped::before {
-    content: "";
-    position: absolute;
-    top: -12px;
-    left: 34px;
-    width: 104px;
-    height: 26px;
-    background: var(--m-tape);
-  }
+.m-paper--taped::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 34px;
+  width: 104px;
+  height: 26px;
+  background: var(--m-tape);
+}
 
+.m-postit {
+  background: var(--m-postit-bg);
+  color: var(--m-postit-on);
+  border-radius: 3px;
+  box-shadow: var(--m-postit-shadow);
+  padding: 16px;
+  transform: rotate(-2deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
   .m-postit {
-    background: var(--m-postit-bg);
-    color: var(--m-postit-on);
-    border-radius: 3px;
-    box-shadow: var(--m-postit-shadow);
-    padding: 16px;
-    transform: rotate(-2deg);
+    transform: none;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .m-postit {
-      transform: none;
-    }
-  }
+}
 ```
 
 - [ ] **Step 4: Run tests** — `npm run test -- styles` — Expected: PASS (treatments present, token-only, body grid-free, still inside `@layer`).
@@ -315,10 +325,12 @@ git commit -m "feat(morass): surface treatments (canvas-grid opt-in, paper, tape
 Add the control/status treatment utilities. `felt` provides the swatch fill+ink; `stitch` provides the sewn dashed seam. Both token-only.
 
 **Files:**
+
 - Modify: `src/styles.css`
 - Test: `src/styles.test.ts`
 
 **Interfaces:**
+
 - Produces CSS classes: `.m-felt`, modifiers `.m-felt--sage|butter|rose|sky|lavender`, and `.m-stitch`.
 
 - [ ] **Step 1: Write the failing test** — add to `src/styles.test.ts`:
@@ -336,38 +348,38 @@ it("defines the control treatments (felt + stitch) using only tokens", () => {
 - [ ] **Step 3: Add the treatments** — append inside `@layer morass`:
 
 ```css
-  .m-felt {
-    background: var(--m-felt-sage);
-    color: var(--m-felt-sage-on);
-    border: none;
-    border-radius: 12px;
-  }
+.m-felt {
+  background: var(--m-felt-sage);
+  color: var(--m-felt-sage-on);
+  border: none;
+  border-radius: 12px;
+}
 
-  .m-felt--sage {
-    background: var(--m-felt-sage);
-    color: var(--m-felt-sage-on);
-  }
-  .m-felt--butter {
-    background: var(--m-felt-butter);
-    color: var(--m-felt-butter-on);
-  }
-  .m-felt--rose {
-    background: var(--m-felt-rose);
-    color: var(--m-felt-rose-on);
-  }
-  .m-felt--sky {
-    background: var(--m-felt-sky);
-    color: var(--m-felt-sky-on);
-  }
-  .m-felt--lavender {
-    background: var(--m-felt-lavender);
-    color: var(--m-felt-lavender-on);
-  }
+.m-felt--sage {
+  background: var(--m-felt-sage);
+  color: var(--m-felt-sage-on);
+}
+.m-felt--butter {
+  background: var(--m-felt-butter);
+  color: var(--m-felt-butter-on);
+}
+.m-felt--rose {
+  background: var(--m-felt-rose);
+  color: var(--m-felt-rose-on);
+}
+.m-felt--sky {
+  background: var(--m-felt-sky);
+  color: var(--m-felt-sky-on);
+}
+.m-felt--lavender {
+  background: var(--m-felt-lavender);
+  color: var(--m-felt-lavender-on);
+}
 
-  .m-stitch {
-    outline: 2px dashed var(--m-stitch);
-    outline-offset: -5px;
-  }
+.m-stitch {
+  outline: 2px dashed var(--m-stitch);
+  outline-offset: -5px;
+}
 ```
 
 - [ ] **Step 4: Run tests** — `npm run test -- styles contract` — Expected: PASS.
@@ -386,11 +398,13 @@ git commit -m "feat(morass): control treatments (felt swatches + stitch seam)"
 Introduce the machine-readable mapping (role → required treatment class) that Phase 2 will assert per component, plus a test that every treatment the map references actually exists in `styles.css`. This is the enforcement backbone.
 
 **Files:**
+
 - Create: `src/materials.ts`
 - Modify: `src/index.ts` (export the map so consumers/tests can read it)
 - Test: `src/materials.test.ts`
 
 **Interfaces:**
+
 - Consumes: the treatment classes from Tasks 4–5.
 - Produces: `export type MaterialRole = "canvas" | "content" | "ephemeral" | "control-status";` and `export const MATERIAL_TREATMENTS: Record<MaterialRole, string[]>`.
 
@@ -437,7 +451,8 @@ describe("material → role map", () => {
  * from exactly one craft material; Phase 2 asserts each component's rule
  * carries the treatment for its role. Class names match styles.css.
  */
-export type MaterialRole = "canvas" | "content" | "ephemeral" | "control-status";
+export type MaterialRole =
+  "canvas" | "content" | "ephemeral" | "control-status";
 
 export const MATERIAL_TREATMENTS: Record<MaterialRole, string[]> = {
   canvas: [".m-canvas-grid"],

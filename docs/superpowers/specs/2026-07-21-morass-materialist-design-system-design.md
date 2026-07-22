@@ -9,7 +9,7 @@ morass is being elevated from a deliberately narrow "proof-of-craft" kit into **
 
 This supersedes, for the UI-system question specifically, the 2026-07-13 "attrition / no migration project" posture (Kevin, 2026-07-21): we are now actively investing in morass to make it complete and distinctive, and actively retiring effigy-ui.
 
-**Aesthetic north star — craft materialism.** UIs that feel *tangible*, built from common household craft materials: paper, graph/notebook paper, fabric and felt, tape, post-it notes. A warm pastel palette. Opinionated and specific — a look nobody else in analytics has. This is not decoration for its own sake: the tactility and the material logic are the brand.
+**Aesthetic north star — craft materialism.** UIs that feel _tangible_, built from common household craft materials: paper, graph/notebook paper, fabric and felt, tape, post-it notes. A warm pastel palette. Opinionated and specific — a look nobody else in analytics has. This is not decoration for its own sake: the tactility and the material logic are the brand.
 
 ## 2. The core idea — `material = role` (the semantic contract)
 
@@ -17,13 +17,13 @@ Every surface is "made of" a craft material, and the material is chosen by the e
 
 Three materials, three roles:
 
-| Material | Role | Applies to |
-|---|---|---|
-| **Graph paper** | **The canvas** — the work surface everything sits on | App/page backgrounds, data tables, chart gridlines, form-field alignment |
-| **Cut paper + tape** | **Content** — discrete pieces placed on the canvas | Cards, panels, dialogs, list items. The **post-it** variant = ephemeral notes, callouts, tooltips |
-| **Felt + stitching** | **Controls & status** — durable, sewn-on, interactive/indicator bits | Buttons, badges, status pills, tags, toggles, chips |
+| Material             | Role                                                                 | Applies to                                                                                        |
+| -------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Graph paper**      | **The canvas** — the work surface everything sits on                 | App/page backgrounds, data tables, chart gridlines, form-field alignment                          |
+| **Cut paper + tape** | **Content** — discrete pieces placed on the canvas                   | Cards, panels, dialogs, list items. The **post-it** variant = ephemeral notes, callouts, tooltips |
+| **Felt + stitching** | **Controls & status** — durable, sewn-on, interactive/indicator bits | Buttons, badges, status pills, tags, toggles, chips                                               |
 
-Mental model: *a craft desk.* You work on graph-paper (canvas); you make and arrange cut-paper pieces (content), taping them down or leaving post-it notes; the interactive/labeling bits are felt patches sewn on with a visible stitch (controls & status).
+Mental model: _a craft desk._ You work on graph-paper (canvas); you make and arrange cut-paper pieces (content), taping them down or leaving post-it notes; the interactive/labeling bits are felt patches sewn on with a visible stitch (controls & status).
 
 ## 3. Palette & tokens
 
@@ -43,11 +43,11 @@ Exact hex values are tuned against `validateTheme` during Phase 1 (see §8); the
 
 Each theme has a light and a dark variant.
 
-**Dark mode = "craft desk at night," with interesting highlights — not sleepy.** A dark warm-neutral canvas and darker felt/paper surfaces, but the accents are *luminous*: glowing stitch seams, highlighter-marker pops, and a lifted accent that makes controls and status read as **backlit** against the dark material. The point of difference is that our dark mode is vivid and characterful, not a desaturated afterthought. Still a strict overlay (dark-sync test) and still AA via `validateTheme`.
+**Dark mode = "craft desk at night," with interesting highlights — not sleepy.** A dark warm-neutral canvas and darker felt/paper surfaces, but the accents are _luminous_: glowing stitch seams, highlighter-marker pops, and a lifted accent that makes controls and status read as **backlit** against the dark material. The point of difference is that our dark mode is vivid and characterful, not a desaturated afterthought. Still a strict overlay (dark-sync test) and still AA via `validateTheme`.
 
 ## 4. Material treatment primitives
 
-Reusable, token-driven CSS treatments live inside `@layer morass` so components declare a *material*, never raw texture. All built from **CSS only** (layered gradients, dashed outlines, box-shadows) — no raster assets, keeping morass self-contained and themeable:
+Reusable, token-driven CSS treatments live inside `@layer morass` so components declare a _material_, never raw texture. All built from **CSS only** (layered gradients, dashed outlines, box-shadows) — no raster assets, keeping morass self-contained and themeable:
 
 - **canvas-grid** — the graph-paper background (layered `repeating-linear-gradient`s + margin rule). **Opt-in per app** (an `AppFrame`/page prop), never a forced global background — a consumer decides how loud the aesthetic runs, and a plain warm-paper canvas is the default. Applies only to background/table/section roles.
 - **paper** — content-surface treatment: warm surface, soft "paper lift" shadow, optional **tape** tab (pseudo-element).
@@ -61,18 +61,18 @@ Each treatment is expressed as a token set / utility applied by the component fo
 
 **Restyle existing (13) to the material system:**
 
-| Component | Material / role |
-|---|---|
-| Button, ButtonLink | felt (control) |
-| Card | paper + tape (content) |
-| AppFrame | graph canvas + paper panels |
-| Hero, PageSection | canvas region |
-| TextField, SelectField | paper input on canvas |
-| StatusPill | stitched felt (status) |
-| Metric | paper card (content) |
-| Tabs | felt (control) |
-| ProgressSteps | stitched felt (control/status) |
-| Modal | paper (taped) over backdrop |
+| Component              | Material / role                |
+| ---------------------- | ------------------------------ |
+| Button, ButtonLink     | felt (control)                 |
+| Card                   | paper + tape (content)         |
+| AppFrame               | graph canvas + paper panels    |
+| Hero, PageSection      | canvas region                  |
+| TextField, SelectField | paper input on canvas          |
+| StatusPill             | stitched felt (status)         |
+| Metric                 | paper card (content)           |
+| Tabs                   | felt (control)                 |
+| ProgressSteps          | stitched felt (control/status) |
+| Modal                  | paper (taped) over backdrop    |
 
 **Add to reach effigy-ui parity (4):** **Avatar**, **Badge** (stitched felt), **EmptyState** (post-it/paper), **PageHeader** (canvas header). These are the only components the four frozen consumers use that morass lacks today.
 

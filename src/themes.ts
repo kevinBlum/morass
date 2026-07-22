@@ -101,7 +101,7 @@ export const themes: { light: MorassTheme; dark: MorassTheme } = {
     "--m-shadow-modal": "0 24px 80px rgb(0 0 0 / 0.55)",
     "--m-grid-line": "#232a27",
     "--m-grid-margin": "#5c3f3b",
-    "--m-tape": "rgb(120 150 165 / 0.30)",
+    "--m-tape": "rgb(120 150 165 / 0.3)",
     "--m-stitch": "#9fe4c0",
     "--m-paper-shadow": "3px 6px 18px rgb(0 0 0 / 0.45)",
     "--m-postit-bg": "#4a4222",
