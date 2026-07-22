@@ -74,7 +74,7 @@ Each treatment is expressed as a token set / utility applied by the component fo
 | ProgressSteps          | stitched felt (control/status) |
 | Modal                  | paper (taped) over backdrop    |
 
-**Add to reach effigy-ui parity (4):** **Avatar**, **Badge** (stitched felt), **EmptyState** (post-it/paper), **PageHeader** (canvas header). These are the only components the four frozen consumers use that morass lacks today.
+**Add to reach effigy-ui parity — driven by an audit of what the 4 frozen consumers actually import (2026-07-21), NOT effigy-ui's full export surface:** **PageHeader** (canvas header — all 4 consumers), **EmptyState** (post-it/paper — awards, steam-sage, declassify), **NotFound** (404 page — awards, fiscally). Plus two mappings rather than new components: fiscally's **ShellLayout** → morass's existing **AppFrame**, and fiscally's **`LinkRenderProps`** custom link-renderer → a link-render prop on `AppFrame`/`ButtonLink` (confirm morass exposes one; add if not). Avatar/Badge are NOT used by any consumer and are dropped from parity scope.
 
 morass stays intentionally lean: **no components beyond effigy-ui parity + the material system.** Component-count remains deprioritized past parity.
 
@@ -100,13 +100,13 @@ A comprehensive visual + token change → **morass 0.5.0** (breaking-minor, pre-
 
 1. **Foundation** — pastel palette + material treatment primitives + tokens + contract-test scaffolding. Tune hex against `validateTheme`. No component redesign yet beyond tokens.
 2. **Core components** — restyle Card, Button, StatusPill, AppFrame, TextField/SelectField; add the `material → role` lint.
-3. **Parity** — remaining components + the four new ones (Avatar, Badge, EmptyState, PageHeader). effigy-ui feature parity reached here.
+3. **Parity** — remaining component restyles + the audited parity set (PageHeader, EmptyState, NotFound) + the ShellLayout→AppFrame and link-renderer mappings. effigy-ui feature parity for the 4 consumers reached here.
 4. **Dark craft pass** — dark-mode material treatments; finalize `validateTheme` pairs.
 5. **Dogfood + showcase** — apply on the hub/frontend (already a morass consumer); publish a **single public showcase route** demonstrating the material system as morass's "proof of craft." (Not a docs site.)
 
 ## 9. effigy-ui deprecation path
 
-1. **Gate:** morass 0.5.x at component parity for the four consumers' actual usage (Card, PageHeader, EmptyState, Badge, Button, Input/Select, Avatar).
+1. **Gate:** morass 0.5.x at component parity for the four consumers' _audited_ actual usage — Card (have), **PageHeader**, **EmptyState**, **NotFound**, ShellLayout→AppFrame, and the custom link-renderer prop. (No consumer imports Avatar or Badge.)
 2. **Migrate** awards, fiscally, steam-sage, declassify off `@effigy-analytics/effigy-ui` → morass. Small surfaces (declassify uses only 3 components). Each migration is the "touch that unfreezes" per the deprecation ruling, tracked as its own follow-on.
 3. **Archive** effigy-ui at zero consumers.
 4. declassify #104's pending effigy-ui package grant becomes moot after that migration — but it still lands now, to unblock the in-flight security patch.
