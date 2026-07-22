@@ -2,6 +2,10 @@
 
 All notable Morass changes should be recorded here before publishing a package version.
 
+## 0.7.1
+
+- Fixes release publication under npm 12 by passing the canonical package tarball to `npm publish` as an absolute filesystem path. The `0.7.0` GitHub release completed package verification but did not reach npmjs or GitHub Packages because npm interpreted its unprefixed relative tarball path as a GitHub dependency spec.
+
 ## 0.7.0
 
 - Reconciles package, lockfile, changelog, tag, and registry controls around public npmjs as the canonical release source. Release CI packs once, verifies registry integrity and commit provenance, rejects untagged or non-main release commits, and verifies tokenless consumer installs.
