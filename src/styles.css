@@ -768,4 +768,47 @@
     color: var(--m-color-primary);
     font-weight: 700;
   }
+
+  .m-shell__brand {
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  .m-shell__env {
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 2px 9px;
+    text-transform: uppercase;
+  }
+
+  .m-shell__nav {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+
+  .m-shell__nav a {
+    border-radius: 8px;
+    color: var(--m-color-text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 6px 10px;
+    text-decoration: none;
+  }
+
+  .m-shell__nav a.active {
+    background: var(--m-color-surface-muted);
+    color: var(--m-color-text);
+  }
+
+  .m-shell__actions {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+  }
 }

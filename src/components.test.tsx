@@ -14,6 +14,7 @@ import {
   PageSection,
   ProgressSteps,
   SelectField,
+  ShellLayout,
   StatusPill,
   Tabs,
   TextField,
@@ -115,6 +116,41 @@ describe("component primitives", () => {
     expect(withoutSidebar).toContain('class="m-app-frame"');
     expect(withoutSidebar).not.toContain("m-app-frame--sidebar");
     expect(withoutSidebar).not.toContain("m-app-frame__sidebar");
+  });
+
+  it("renders ShellLayout header (brand, env pill, nav, actions) over an AppFrame", () => {
+    const html = renderToStaticMarkup(
+      <ShellLayout
+        actions={<button>Menu</button>}
+        appName="Effigy Awards"
+        environment="dev"
+        nav={<a href="/">Home</a>}
+      >
+        Page
+      </ShellLayout>,
+    );
+    expect(html).toContain('class="m-app-frame"');
+    expect(html).toContain('class="m-app-frame__header"');
+    expect(html).toContain('class="m-shell__brand">Effigy Awards</span>');
+    expect(html).toContain(
+      'class="m-shell__env m-felt m-felt--butter m-stitch">dev</span>',
+    );
+    expect(html).toContain('class="m-shell__nav"');
+    expect(html).toContain('class="m-shell__actions"');
+    expect(html).toContain("Page");
+  });
+
+  it("hides the ShellLayout env pill for prod and when unset", () => {
+    const prod = renderToStaticMarkup(
+      <ShellLayout appName="X" environment="prod">
+        P
+      </ShellLayout>,
+    );
+    const unset = renderToStaticMarkup(
+      <ShellLayout appName="X">P</ShellLayout>,
+    );
+    expect(prod).not.toContain("m-shell__env");
+    expect(unset).not.toContain("m-shell__env");
   });
 
   it("renders form fields with labels, help text, errors, and native attributes", () => {

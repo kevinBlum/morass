@@ -131,6 +131,49 @@ export function AppFrame({ children, header, nav, sidebar }: AppFrameProps) {
   );
 }
 
+const HIDDEN_ENVIRONMENTS = new Set(["", "prod", "production"]);
+
+export interface ShellLayoutProps {
+  /** Header-right actions (e.g. a user menu). */
+  actions?: ReactNode;
+  /** Brand / app name shown at the header start. */
+  appName: ReactNode;
+  children: ReactNode;
+  /** Environment name; shown as a felt pill unless prod/empty. */
+  environment?: string;
+  /** Primary navigation — pass your router's links (e.g. `NavLink`). */
+  nav?: ReactNode;
+}
+
+/**
+ * Opinionated Effigy app shell: a materialist header (brand, environment
+ * pill, nav, actions) over an AppFrame. This is how Effigy sites are
+ * structured; apps supply their own router links via `nav`.
+ */
+export function ShellLayout({
+  actions,
+  appName,
+  children,
+  environment,
+  nav,
+}: ShellLayoutProps) {
+  const showEnvironment =
+    environment !== undefined && !HIDDEN_ENVIRONMENTS.has(environment);
+  const header = (
+    <>
+      <span className="m-shell__brand">{appName}</span>
+      {showEnvironment ? (
+        <span className="m-shell__env m-felt m-felt--butter m-stitch">
+          {environment}
+        </span>
+      ) : null}
+      {nav ? <nav className="m-shell__nav">{nav}</nav> : null}
+      {actions ? <div className="m-shell__actions">{actions}</div> : null}
+    </>
+  );
+  return <AppFrame header={header}>{children}</AppFrame>;
+}
+
 export interface HeroProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   actions?: ReactNode;
   eyebrow?: ReactNode;
