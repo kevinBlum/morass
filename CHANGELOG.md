@@ -2,6 +2,15 @@
 
 All notable Morass changes should be recorded here before publishing a package version.
 
+## 0.5.0
+
+- **Visual redesign — craft materialism.** The palette moves from the teal/professional set to a warm pastel "craft" system (paper, graph paper, felt, tape, post-it). This restyles every consumer surface; pin your own theme tokens if you need the old look.
+- **`material = role` design contract.** New `MaterialRole` type + `MATERIAL_TREATMENTS` map: graph paper = canvas, cut paper + tape = content, felt + stitching = controls/status.
+- **Pastel felt palette.** New `--m-felt-{sage,butter,rose,sky,lavender}` fills, each with a paired `-on` ink token, added to every theme and to the `REQUIRED_PAIRS` contrast contract (WCAG AA in both light and dark, ≥5.74:1).
+- **Material treatment utilities** (CSS-only, token-driven, inside `@layer morass`): `.m-canvas-grid` (opt-in graph-paper backdrop), `.m-paper` / `.m-paper--taped`, `.m-postit` (reduced-motion aware), `.m-felt` (+ swatch modifiers), `.m-stitch`.
+- **Warm-paper canvas + material-structure tokens** (`--m-grid-line`, `--m-tape`, `--m-stitch`, `--m-paper-shadow`, post-it tokens, …).
+- **New components (effigy-ui parity):** `PageHeader` (`title`/`subtitle`/`breadcrumbs`/`actions`), `EmptyState` (`title`/`description`/`action`/`icon`, on the paper treatment), and `NotFound` (`heading`/`message`/`action`, `role="status"`). Prop shapes match `@effigy-analytics/effigy-ui` so migration is an import swap.
+
 ## 0.4.1
 
 - `validateTheme` now throws on out-of-range or non-numeric `rgb()` channels and alpha (e.g. `rgb(300 0 0)`, alpha `1.5`) instead of computing nonsense or passing NaN ratios vacuously.
