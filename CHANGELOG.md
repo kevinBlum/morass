@@ -2,6 +2,10 @@
 
 All notable Morass changes should be recorded here before publishing a package version.
 
+## 0.6.0
+
+- New **`ShellLayout`** — the opinionated Effigy app shell: a materialist header (brand, environment felt-pill, primary nav, right-aligned actions) over `AppFrame`. Apps pass their own router links via the `nav` slot; the environment pill hides for `prod`/unset. This is the standard "how Effigy sites are structured" surface, replacing effigy-ui's `ShellLayout`.
+
 ## 0.5.1
 
 - `Card` gains `subtitle` (descriptive text under the title) and `noPadding` (flush body for tables/embeds), closing the last API gaps versus `@effigy-analytics/effigy-ui`'s `Card` so consumers migrate by import swap.
