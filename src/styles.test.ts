@@ -112,3 +112,14 @@ describe("themes.ts stays in sync with styles.css", () => {
     );
   });
 });
+
+describe("surface treatments", () => {
+  it("defines the surface treatments using only tokens", () => {
+    for (const sel of [".m-canvas-grid", ".m-paper", ".m-postit"]) {
+      expect(css.includes(`${sel} {`)).toBe(true);
+    }
+    // canvas-grid must be opt-in: body must not carry the grid
+    const body = blockOf(css, "body") ?? "";
+    expect(body.includes("repeating-linear-gradient")).toBe(false);
+  });
+});

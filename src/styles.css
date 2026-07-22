@@ -584,4 +584,44 @@
       position: sticky;
     }
   }
+
+  .m-canvas-grid {
+    background:
+      linear-gradient(var(--m-grid-margin) 0 0) 46px 0 / 1.5px 100% no-repeat,
+      repeating-linear-gradient(var(--m-grid-line) 0 1px, transparent 1px 24px),
+      repeating-linear-gradient(90deg, var(--m-grid-line) 0 1px, transparent 1px 24px),
+      var(--m-color-bg);
+  }
+
+  .m-paper {
+    background: var(--m-color-surface);
+    border-radius: var(--m-radius);
+    box-shadow: var(--m-paper-shadow);
+    position: relative;
+  }
+
+  .m-paper--taped::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 34px;
+    width: 104px;
+    height: 26px;
+    background: var(--m-tape);
+  }
+
+  .m-postit {
+    background: var(--m-postit-bg);
+    color: var(--m-postit-on);
+    border-radius: 3px;
+    box-shadow: var(--m-postit-shadow);
+    padding: 16px;
+    transform: rotate(-2deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .m-postit {
+      transform: none;
+    }
+  }
 }
