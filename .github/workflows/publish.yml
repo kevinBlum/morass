@@ -48,17 +48,17 @@ jobs:
           mkdir release-artifact
           TARBALL="$(npm pack --pack-destination release-artifact)"
           test -f "release-artifact/$TARBALL"
-          echo "MORASS_TARBALL=release-artifact/$TARBALL" >> "$GITHUB_ENV"
+          echo "MORASS_TARBALL=$GITHUB_WORKSPACE/release-artifact/$TARBALL" >> "$GITHUB_ENV"
 
       - name: Verify exact artifact with React 18
-        run: npm run install:check -- "$GITHUB_WORKSPACE/$MORASS_TARBALL"
+        run: npm run install:check -- "$MORASS_TARBALL"
         env:
           MORASS_REACT_VERSION: 18.2.0
           MORASS_REACT_TYPES_VERSION: 18.2.0
           MORASS_REACT_DOM_TYPES_VERSION: 18.2.0
 
       - name: Verify exact artifact with React 19
-        run: npm run install:check -- "$GITHUB_WORKSPACE/$MORASS_TARBALL"
+        run: npm run install:check -- "$MORASS_TARBALL"
         env:
           MORASS_REACT_VERSION: 19.2.7
           MORASS_REACT_TYPES_VERSION: 19.2.17
