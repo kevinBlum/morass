@@ -345,6 +345,45 @@
     margin-top: 20px;
   }
 
+  .m-page-header {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    padding: 24px 0 16px;
+  }
+
+  .m-page-header__main {
+    min-width: 0;
+  }
+
+  .m-page-header__breadcrumbs {
+    color: var(--m-color-text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  .m-page-header__title {
+    font-size: 1.6rem;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .m-page-header__subtitle {
+    color: var(--m-color-text-muted);
+    font-size: 0.95rem;
+    margin: 6px 0 0;
+    max-width: 60ch;
+  }
+
+  .m-page-header__actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
   .m-page-section {
     padding: 28px 0;
   }

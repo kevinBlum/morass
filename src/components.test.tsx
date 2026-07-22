@@ -8,6 +8,7 @@ import {
   Hero,
   Metric,
   Modal,
+  PageHeader,
   PageSection,
   ProgressSteps,
   SelectField,
@@ -144,6 +145,30 @@ describe("component primitives", () => {
     expect(html).toContain("<em>humans</em>");
     expect(html).toContain('class="m-hero__lede"');
     expect(html).toContain('class="m-hero__actions"');
+  });
+
+  it("renders a PageHeader with title, subtitle, breadcrumbs, and actions", () => {
+    const html = renderToStaticMarkup(
+      <PageHeader
+        actions={<button>New</button>}
+        breadcrumbs={<nav>Home / Reports</nav>}
+        subtitle="Last 30 days"
+        title="Reports"
+      />,
+    );
+    expect(html).toContain('class="m-page-header"');
+    expect(html).toContain('class="m-page-header__breadcrumbs"');
+    expect(html).toContain('<h1 class="m-page-header__title">Reports</h1>');
+    expect(html).toContain('class="m-page-header__subtitle"');
+    expect(html).toContain('class="m-page-header__actions"');
+  });
+
+  it("omits PageHeader optional slots when not provided", () => {
+    const html = renderToStaticMarkup(<PageHeader title="Bare" />);
+    expect(html).toContain('class="m-page-header"');
+    expect(html).not.toContain("m-page-header__breadcrumbs");
+    expect(html).not.toContain("m-page-header__subtitle");
+    expect(html).not.toContain("m-page-header__actions");
   });
 
   it("renders tabs with accessible tablist state", () => {

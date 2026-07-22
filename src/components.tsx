@@ -147,6 +147,40 @@ export function Hero({
   );
 }
 
+export interface PageHeaderProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "title"
+> {
+  actions?: ReactNode;
+  breadcrumbs?: ReactNode;
+  subtitle?: ReactNode;
+  title: ReactNode;
+}
+
+export function PageHeader({
+  actions,
+  breadcrumbs,
+  className,
+  subtitle,
+  title,
+  ...props
+}: PageHeaderProps) {
+  return (
+    <header className={cx("m-page-header", className)} {...props}>
+      <div className="m-page-header__main">
+        {breadcrumbs ? (
+          <div className="m-page-header__breadcrumbs">{breadcrumbs}</div>
+        ) : null}
+        <h1 className="m-page-header__title">{title}</h1>
+        {subtitle ? (
+          <p className="m-page-header__subtitle">{subtitle}</p>
+        ) : null}
+      </div>
+      {actions ? <div className="m-page-header__actions">{actions}</div> : null}
+    </header>
+  );
+}
+
 export interface PageSectionProps extends HTMLAttributes<HTMLElement> {
   label?: ReactNode;
 }
