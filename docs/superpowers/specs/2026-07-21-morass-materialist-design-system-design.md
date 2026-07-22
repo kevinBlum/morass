@@ -35,13 +35,21 @@ Layered on morass's existing `--m-*` token system (`styles.css` `:root` light bl
 
 Exact hex values are tuned against `validateTheme` during Phase 1 (see §8); the brainstorm mockups used a working set (sage `#c9ddcb`/deep `#5c8168`, butter `#f6e6a6`, rose `#efc9c6`, sky `#c4dbe6`, lavender `#d8cde9`, cream `#f7f2e7`, ink `#423d34`) as the starting point.
 
-**Dark mode = "craft desk at night":** a dark warm-neutral canvas, materials rendered as darker felt/paper, pastels desaturated. Must remain a strict overlay (dark-sync test) and preserve AA.
+**Default named themes.** morass ships a small curated set of **default themes** (attribute themes via `data-m-theme`, consistent with 0.4.0's rejection of `light-dark()`), each a complete pastel craft palette that independently passes `validateTheme` and carries paired `on-` tokens. Consumers pick one; the set is intentionally small, not a theme marketplace. Proposed starting set (exact hex tuned in Phase 1):
+
+- **Notebook** (default) — sage + cream + butter; the graph-paper classic.
+- **Quilt** — warmer fabric tones: rose, lavender, dusty sky.
+- **Workshop** — cooler kraft tones: sky, sage, manila.
+
+Each theme has a light and a dark variant.
+
+**Dark mode = "craft desk at night," with interesting highlights — not sleepy.** A dark warm-neutral canvas and darker felt/paper surfaces, but the accents are *luminous*: glowing stitch seams, highlighter-marker pops, and a lifted accent that makes controls and status read as **backlit** against the dark material. The point of difference is that our dark mode is vivid and characterful, not a desaturated afterthought. Still a strict overlay (dark-sync test) and still AA via `validateTheme`.
 
 ## 4. Material treatment primitives
 
 Reusable, token-driven CSS treatments live inside `@layer morass` so components declare a *material*, never raw texture. All built from **CSS only** (layered gradients, dashed outlines, box-shadows) — no raster assets, keeping morass self-contained and themeable:
 
-- **canvas-grid** — the graph-paper background (layered `repeating-linear-gradient`s + margin rule). Applied to background/table/section roles.
+- **canvas-grid** — the graph-paper background (layered `repeating-linear-gradient`s + margin rule). **Opt-in per app** (an `AppFrame`/page prop), never a forced global background — a consumer decides how loud the aesthetic runs, and a plain warm-paper canvas is the default. Applies only to background/table/section roles.
 - **paper** — content-surface treatment: warm surface, soft "paper lift" shadow, optional **tape** tab (pseudo-element).
 - **postit** — ephemeral-note treatment: butter fill, slight rotation, tape.
 - **stitch** — dashed inset "seam" (`outline` dashed, negative offset) for felt controls/status.
@@ -110,8 +118,13 @@ A comprehensive visual + token change → **morass 0.5.0** (breaking-minor, pre-
 - No raster/image textures — CSS-only, self-contained.
 - Consumer migrations (§9.2) are a follow-on plan, not this spec's implementation.
 
-## 11. Open questions (resolve during Phase 1 / review)
+## 11. Resolved decisions (Kevin, 2026-07-21)
 
-- Final palette hex values (tuned against `validateTheme`).
-- Is the graph-paper canvas always-on per page, or opt-in per app?
-- Dark-mode craft fidelity — how literal should "craft desk at night" be?
+- **Graph-paper canvas is opt-in per app** (a prop), not an always-on global background. Default is a plain warm-paper canvas. (§4)
+- **Ship a few curated default themes** — Notebook (default) / Quilt / Workshop — rather than a single palette. Each validated independently. (§3)
+- **Dark mode has interesting, luminous highlights** — vivid and characterful (backlit stitch/accent), not a muted afterthought. (§3)
+
+Still to settle during Phase 1 (implementation detail, not blocking):
+
+- Final palette hex values per theme (tuned against `validateTheme`).
+- Exact dark-mode highlight technique (glow via layered shadow vs. saturated accent tokens).
