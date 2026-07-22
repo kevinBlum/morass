@@ -51,6 +51,14 @@ export const themes: { light: MorassTheme; dark: MorassTheme } = {
     "--m-shadow": "0 16px 40px rgb(29 37 36 / 0.08)",
     "--m-font":
       'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    "--m-grid-line": "#e9ebdf",
+    "--m-grid-margin": "#f0b6ad",
+    "--m-tape": "rgb(196 219 230 / 0.62)",
+    "--m-stitch": "#5c8168",
+    "--m-paper-shadow": "3px 6px 16px rgb(120 105 70 / 0.16)",
+    "--m-postit-bg": "#f6e6a6",
+    "--m-postit-on": "#5f4e12",
+    "--m-postit-shadow": "2px 5px 12px rgb(120 100 40 / 0.25)",
   },
   dark: {
     "--m-color-bg": "#121817",
@@ -91,5 +99,13 @@ export const themes: { light: MorassTheme; dark: MorassTheme } = {
     "--m-felt-lavender-on": "#cdb9ec",
     "--m-shadow": "0 16px 40px rgb(0 0 0 / 0.4)",
     "--m-shadow-modal": "0 24px 80px rgb(0 0 0 / 0.55)",
+    "--m-grid-line": "#232a27",
+    "--m-grid-margin": "#5c3f3b",
+    "--m-tape": "rgb(120 150 165 / 0.30)",
+    "--m-stitch": "#9fe4c0",
+    "--m-paper-shadow": "3px 6px 18px rgb(0 0 0 / 0.45)",
+    "--m-postit-bg": "#4a4222",
+    "--m-postit-on": "#f4dd8f",
+    "--m-postit-shadow": "2px 5px 14px rgb(0 0 0 / 0.5)",
   },
 };

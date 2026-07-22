@@ -70,6 +70,22 @@ describe("styles.css invariants", () => {
     expect(auto).not.toBeNull();
     expect(declarationsOf(auto ?? "")).toEqual(declarationsOf(dark ?? ""));
   });
+
+  it("declares the material-structure tokens in :root", () => {
+    const root = recordOf(blockOf(css, ":root") ?? "");
+    for (const t of [
+      "--m-grid-line",
+      "--m-grid-margin",
+      "--m-tape",
+      "--m-stitch",
+      "--m-paper-shadow",
+      "--m-postit-bg",
+      "--m-postit-on",
+      "--m-postit-shadow",
+    ]) {
+      expect(root[t]).toBeDefined();
+    }
+  });
 });
 
 export function recordOf(block: string): Record<string, string> {
