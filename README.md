@@ -149,6 +149,7 @@ Moved out of the root export in 0.2.0.
 Morass supports browser-DOM React applications using React and React DOM 18.2 or 19. The JavaScript build targets ES2022; supported browsers must also provide CSS custom properties, CSS Cascade Layers, and the documented media-query behavior. React Native, legacy browsers, React Server Components, and exact historical browser-version floors are not currently claimed.
 
 - [Public contract](docs/public-contract.md)
+- [Applying the Morass 0.7.1 craft material roles](https://github.com/effigy-analytics/morass/blob/main/docs/craft-application-profile.md)
 - [Migrating 0.4–0.6 consumers to the 0.7 baseline](docs/migrations/0.7.md)
 - [GitHub issues](https://github.com/effigy-analytics/morass/issues) for support and defects
 - [Private security report](https://github.com/effigy-analytics/morass/security/advisories/new) for vulnerabilities
